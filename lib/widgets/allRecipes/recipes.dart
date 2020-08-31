@@ -61,7 +61,7 @@ Widget _buildCardView(BuildContext context, List<DocumentSnapshot> snapshot) {
       Expanded(
         child: GridView.count(
           //childAspectRatio: (itemWidth / itemHeight) + 0.2,
-          childAspectRatio: 0.8,
+          childAspectRatio: 0.623,
           crossAxisCount: 2,
           children:
               snapshot.map((data) => buildCardItem(context, data)).toList(),
