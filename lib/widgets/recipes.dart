@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:matbit/widgets/app.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Recipes extends StatefulWidget {
   @override
   _RecipesState createState() => _RecipesState();
 }
 
+// Sets up all recipes page
 class _RecipesState extends State<Recipes> {
   @override
   Widget build(BuildContext context) {
@@ -18,28 +21,66 @@ class _RecipesState extends State<Recipes> {
   }
 }
 
+// Colls DB and collects recipes
 Widget _buildBody(BuildContext context) {
-  return _buildList(context, dummySnapshot);
+  final recipes = Firestore.instance.collection('recipes').snapshots();
+
+  return StreamBuilder<QuerySnapshot>(
+      stream: recipes,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return LinearProgressIndicator();
+
+        return _buildCardView(context, snapshot.data.documents);
+      });
 }
 
-Widget _buildList(BuildContext context, List<Map> snapshot) {
-  return ListView(
-    children: snapshot.map((data) => _buildListItem(context, data)).toList(),
+// Splits recipes and builds each cards
+Widget _buildCardView(BuildContext context, List<DocumentSnapshot> snapshot) {
+  return GridView.count(
+    crossAxisCount: 2,
+    children: snapshot.map((data) => _buildCardItem(context, data)).toList(),
   );
 }
 
-Widget _buildListItem(BuildContext context, Map data) {
-  var _test = data.values.toList();
-
-  print(_test);
-  print(data["name"]);
-  return Padding(
-    padding: EdgeInsets.symmetric(),
-    child: Container(
-      child: ListTile(
-        title: Text(data["name"]),
-        onTap: () => print(data["name"]),
-      ),
+Widget _buildCardItem(BuildContext context, DocumentSnapshot data) {
+/*   if (data == null) {
+    return <Card>[];
+  } */
+  return Card(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        AspectRatio(
+          aspectRatio: 7 / 5,
+          child: Image.network(
+            data['imageUrl'],
+            fit: BoxFit.fitWidth,
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
+            child: Column(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(data['title']),
+                    Text(data['likes'].length.toString()),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('${data['servings']} porsjoner'),
+                    Text(data['likes'].length.toString()),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     ),
   );
 }
