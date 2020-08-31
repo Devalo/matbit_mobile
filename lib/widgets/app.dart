@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'recipes.dart';
-
-final dummySnapshot = [
-  {"name": "Filip", "votes": 15},
-  {"name": "Abraham", "votes": 14},
-  {"name": "Richard", "votes": 11},
-  {"name": "Ike", "votes": 10},
-  {"name": "Justin", "votes": 1},
-];
+import 'allRecipes/recipes.dart';
 
 class MatbitApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -19,6 +11,7 @@ class MatbitApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        fontFamily: 'Poppins',
       ),
       home: Recipes(),
     );
