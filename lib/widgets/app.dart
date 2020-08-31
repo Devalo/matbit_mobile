@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'allRecipes/recipes.dart';
+import 'showRecipe/showRecipe.dart';
 
 class MatbitApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -13,6 +14,9 @@ class MatbitApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: 'Poppins',
       ),
+      routes: {
+        '/showRecipe': (context) => ShowRecipe(),
+      },
       home: Recipes(),
     );
   }
