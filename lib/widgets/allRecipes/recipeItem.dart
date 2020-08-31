@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 Widget buildCardItem(BuildContext context, DocumentSnapshot data) {
-  print(data);
   if (data == null) {
     return Card(
       child: Text('Finner ingen oppskrifter'),
@@ -11,7 +10,7 @@ Widget buildCardItem(BuildContext context, DocumentSnapshot data) {
   return Card(
     child: Container(
       child: InkWell(
-        onTap: () => print('Clicked recipe ${data['id']}'),
+        onTap: () => print('Clicked recipe ${data.documentID}'),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.end,

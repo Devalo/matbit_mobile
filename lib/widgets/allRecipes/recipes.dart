@@ -42,6 +42,8 @@ Widget _buildCardView(BuildContext context, List<DocumentSnapshot> snapshot) {
   //final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
   //final double itemWidth = size.width / 2;
 
+  print(snapshot.map((doc) => doc.documentID));
+
   return Column(
     children: <Widget>[
       Align(
