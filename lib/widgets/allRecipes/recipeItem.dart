@@ -10,7 +10,11 @@ Widget buildCardItem(BuildContext context, DocumentSnapshot data) {
   return Card(
     child: Container(
       child: InkWell(
-        onTap: () => Navigator.pushNamed(context, '/showRecipe'),
+        onTap: () => Navigator.pushNamed(
+          context,
+          '/showRecipe',
+          arguments: data,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.end,

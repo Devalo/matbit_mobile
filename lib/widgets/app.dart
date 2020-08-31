@@ -14,8 +14,17 @@ class MatbitApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: 'Poppins',
       ),
-      routes: {
-        '/showRecipe': (context) => ShowRecipe(),
+      onGenerateRoute: (settings) {
+        print(settings.name);
+        if (settings.name == '/showRecipe') {
+          var args = settings.arguments;
+
+          return MaterialPageRoute(
+            builder: (_) => ShowRecipe(
+              data: args,
+            ),
+          );
+        }
       },
       home: Recipes(),
     );

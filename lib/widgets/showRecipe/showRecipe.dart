@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 
-class ShowRecipe extends StatefulWidget {
-  @override
-  _RecipeState createState() => _RecipeState();
-}
+class ShowRecipe extends StatelessWidget {
+  final data;
+  ShowRecipe({this.data});
 
-class _RecipeState extends State<ShowRecipe> {
   Widget build(BuildContext context) {
+    print(data['title']);
     return Scaffold(
       appBar: AppBar(
-        title: Text('test'),
+        title: Text('Matbit'),
       ),
+      body: _recipeBody(context, data),
     );
   }
+}
+
+Widget _recipeBody(BuildContext context, recipe) {
+  return Container(
+    child: Text(recipe['title']),
+  );
 }
