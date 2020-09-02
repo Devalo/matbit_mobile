@@ -71,7 +71,10 @@ class ShowRecipe extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(Icons.alarm),
+                    Padding(
+                      padding: EdgeInsets.only(right: 3.0),
+                      child: Icon(Icons.alarm),
+                    ),
                     Text(recipe['cookTime']),
                   ],
                 ),
@@ -81,8 +84,25 @@ class ShowRecipe extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(Icons.local_dining),
+                    Padding(
+                      padding: EdgeInsets.only(right: 3.0),
+                      child: Icon(Icons.local_dining),
+                    ),
                     Text(recipe['difficulty']),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(16.0, 0, 0, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 3.0),
+                      child: Icon(Icons.supervised_user_circle),
+                    ),
+                    Text(recipe['servings']),
+                    Text(recipe['servings'] == '1' ? ' porsjon' : ' porsjoner'),
                   ],
                 ),
               ),
@@ -99,11 +119,14 @@ class ShowRecipe extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Ingridienser',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 5.0),
+                          child: Text(
+                            'Ingredienser',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         ..._getIngredients(context, recipe['ingredients']),
@@ -111,6 +134,58 @@ class ShowRecipe extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+            ],
+          ),
+          Divider(),
+          Column(
+            children: [
+              Container(
+                padding: EdgeInsets.only(left: 16.0),
+                child: Row(
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 5.0),
+                          child: Text(
+                            'Fremgangsmåte',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: screenWidth,
+                          child: Text(
+                            recipe['description'],
+                            softWrap: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Divider(),
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(left: 16.0),
+                child: _getTags(recipe['separatedTags']),
+              ),
+            ],
+          ),
+          Divider(),
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(left: 16.0),
+                child: Text(recipe['username']),
               ),
             ],
           ),
@@ -138,5 +213,23 @@ class ShowRecipe extends StatelessWidget {
           ),
         )
         .toList();
+  }
+
+  Widget _getTags(tags) {
+    print(tags.join(','));
+    return RichText(
+      text: TextSpan(
+        style: TextStyle(color: Colors.black),
+        children: <TextSpan>[
+          TextSpan(
+            text: 'Tags ',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          TextSpan(
+            text: tags.join(','),
+          ),
+        ],
+      ),
+    );
   }
 }
